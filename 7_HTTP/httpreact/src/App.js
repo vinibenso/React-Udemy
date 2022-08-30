@@ -11,7 +11,7 @@ export function App() {
   const [products, setProducts] = useState([])
 
   // 4 - custom hook
-  const { data: items, httpConfig  } = useFetch(url)
+  const { data: items, httpConfig, loading, error } = useFetch(url)
 
   const [name, setName] = useState([])
   const [price, setPrice] = useState([])
@@ -37,36 +37,50 @@ export function App() {
       price,
     };
 
-  //   const res = await fetch(url, {
-  //     method: 'POST',
-  //     headers: {
-  //       "Content-Type": "application/json"
-  //     },
-  //     body: JSON.stringify(product)
-  // })
+    //   const res = await fetch(url, {
+    //     method: 'POST',
+    //     headers: {
+    //       "Content-Type": "application/json"
+    //     },
+    //     body: JSON.stringify(product)
+    // })
 
-  // // 3 - Carregamento Dinamico
-  // const addedProduct = await res.json()
+    // // 3 - Carregamento Dinamico
+    // const addedProduct = await res.json()
 
-  // setProducts((prevProducts) =>[...prevProducts, addedProduct])
+    // setProducts((prevProducts) =>[...prevProducts, addedProduct])
 
-  // 5 - refatorando o post
-  httpConfig(product, "POST" )
+    // 5 - refatorando o post
+    httpConfig(product, "POST")
 
-  setName("")
-  setPrice("")
-};
+    setName("")
+    setPrice("")
+  };
 
+  // 8 - deletando item
+  const handleRemove = (id) => {
+    httpConfig(id, "DELETE")
+  }
   return (
     <div className="App">
       <h1>Lista de produtos</h1>
+      {/*6 - loading*/}
+      {loading && <p>Carregando dados...</p>}
+      {error && <p>{error}</p>}
+      {!loading && 
       <ul>
         {items && items.map((product) => (
           <li key={product.id}>
             {product.name} - R$ {product.price}
+            <button
+            onClick={() => handleRemove(product.id)}
+            >
+              Excluir Item
+            </button>
           </li>
         ))}
       </ul>
+      }
       <div className="add-product">
         <form onSubmit={handleSubmit}>
           <label>
@@ -75,9 +89,11 @@ export function App() {
             Preço:
             <input type="number" value={price} name="price" onChange={(e) => setPrice(e.target.value)} />
           </label>
-          <input type="submit" value="Crirar"/>
+          {/*6 - State de loading no post */}
+          {loading && <input type="submit"  disabebled value="Aguarde" /> }
+          {!loading && <input type="submit" value="Criar" /> }
         </form>
-      
+
       </div>
 
     </div>

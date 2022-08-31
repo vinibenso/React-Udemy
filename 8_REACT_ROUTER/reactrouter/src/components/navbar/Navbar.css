@@ -16,7 +16,7 @@ nav a:hover {
   transition: all 0.3s ease
 }
 
-active {
-  background-color: #000;
-  color: #ccc;
+.active {
+  background-color: #ccc;
+  color: #000;
 }

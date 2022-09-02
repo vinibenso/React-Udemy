@@ -1,0 +1,44 @@
+*{
+  margin: 0;
+  padding: 0;
+  background-color: #012
+}
+
+.products {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+li {
+  list-style-type: none;
+  text-align: center;
+  border: 1px solid #efefef;
+  width: 25%;
+  margin:  10px;
+  color: #fff;
+}
+
+h1 {
+  padding: 20px;
+  font-size: 50px;
+  color: #fff;
+}
+
+
+h3 {
+  font-size: 40px;
+  color: #ccff;
+}
+
+p {
+  color: #fff;
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+button {
+  padding: 20px;
+  background-color: #fff;
+  
+}

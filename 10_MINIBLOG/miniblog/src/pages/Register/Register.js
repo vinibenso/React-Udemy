@@ -1,21 +1,59 @@
+import { db } from '../../firebase/config'
+
 import styles from './Register.module.css'
 import { useState, useEffect } from 'react'
+import { useAuthentication } from '../../hooks/useAuthenticattion'
 
 export function Register() {
+  const [displayName, setDisplayName] = useState("")
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [confirmPassword, setConfirmPassword] = useState("")
+  const [error, setError] = useState("")
 
+  const { createUser, error: authError, loading } = useAuthentication()
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+
+    setError("")
+
+    const user = {
+      displayName,
+      email,
+      password,
+    }
+
+    if (password !== confirmPassword) {
+      setError("As senhas precisam ser iguais")
+      return
+    }
+    const res = await createUser(user)
+
+    console.log(user)
+  }
+
+  useEffect(() => {
+    if (authError) {
+      setError(authError)
+    }
+  }, [authError])
 
   return (
     <div className={styles.register}>
       <h1>Cadastre-se para postar</h1>
-    <p>Cire seu usuário para compartilhar suas historias</p>
-      <form>
+      <p>Cire seu usuário para compartilhar suas historias</p>
+      <form onSubmit={handleSubmit}>
         <label>
           <span>Nome:</span>
           <input
             type="text"
             name="displaName"
             required
-            placeholder="Nome do usuário" />
+            placeholder="Nome do usuário"
+            value={displayName}
+            onChange={(e) => setDisplayName(e.target.value)}
+          />
         </label>
         <label>
           <span>E-mail:</span>
@@ -23,7 +61,10 @@ export function Register() {
             type="email"
             name="displayemail"
             required
-            placeholder="E-mail do usuário" />
+            placeholder="E-mail do usuário"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
         </label>
         <label>
           <span>Senha:</span>
@@ -31,7 +72,10 @@ export function Register() {
             type="password"
             name="password"
             required
-            placeholder="Isira sua senha" />
+            placeholder="Isira sua senha"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
         </label>
         <label>
           <span>Confirmação de senha:</span>
@@ -39,11 +83,21 @@ export function Register() {
             type="password"
             name="confirmPassword"
             required
-            placeholder="Confirme a sua senha" />
+            placeholder="Confirme a sua senha"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+          />
         </label>
-        <button className="btn">
+        {!loading && <button className="btn">
           Cadastrar
-        </button>
+        </button>}
+        {loading && <button className="btn" disabled>
+          Aguarde...
+        </button>}
+
+
+
+        {error && <p className="error">{error}</p>}
       </form>
     </div>
   )

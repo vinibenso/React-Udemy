@@ -1,0 +1,19 @@
+.create_post {
+  text-align: center;
+}
+
+.create_post h2 {
+  font-size: 2.2rem;
+}
+
+.create_post p {
+  color: #aaa;
+  margin-bottom: 2rem;
+}
+
+.create_post textarea {
+  height: 150px;
+  resize: none;
+  width: 25rem;
+  
+}

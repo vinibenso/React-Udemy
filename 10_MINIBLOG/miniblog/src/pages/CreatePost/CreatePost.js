@@ -2,6 +2,7 @@ import styles from './CreatePost.module.css'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuthValue } from '../..//context/AuthContext'
+import { useInsertDocument } from '../../hooks/useInsertDocument'
 
 
 export function CreatePost() {
@@ -10,9 +11,24 @@ export function CreatePost() {
   const [body, setBody] = useState("")
   const [tags, setTags] = useState([])
   const [formError, setFormError] = useState("")
+  const {insertDocument, response} = useInsertDocument("posts")
+ 
+  const {user} = useAuthValue()
+
 
   const handleSubmit = (e) => {
     e.preventDefault()
+    setFormError("")
+   
+   insertDocument({
+    title,
+    image,
+    body,
+    tags,
+    uid: user.uid,
+    createdBy: user.displayName
+   })
+   
   }
 
   return (
@@ -38,8 +54,8 @@ export function CreatePost() {
             name="image"
             required
             placeholder="Insira uma imagem que repsente seu post"
-            onChange={(e) => setTitle(e.target.value)}
-            value={title}
+            onChange={(e) => setImage(e.target.value)}
+            value={image}
           />
         </label>
         <label>
@@ -64,21 +80,15 @@ export function CreatePost() {
             value={tags}
           />
         </label>
-        <button className="btn">
-          Cadastrar
-        </button>
-        {/* {!loading && 
+        {!response.loading && 
         <button className="btn">
           Cadastrar
         </button>}
-        {loading && 
+        {response.loading && 
         <button className="btn" disabled>
           Aguarde...
         </button>}
-        {error && <p className="error">{error}</p>} */}
-
-
-
+        {response.error && <p className="error">{response.error}</p>}
       </form>
     </div>
   )

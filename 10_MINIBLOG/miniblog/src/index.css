@@ -64,7 +64,7 @@ textarea {
 }
 
 .btn {
-  background-color:#675899 ;
+  background-color:#621894 ;
   color: #ffffff;
   text-align: center;
   cursor: pointer;
@@ -77,8 +77,8 @@ textarea {
 }
 
 .btn.btn-dark {
-  background-color: #ffff;
-  border-radius: 0;
+  background-color:#621894;
+  border-radius: 5px;
 }
 
 .btn.btn-outline{
@@ -87,15 +87,19 @@ textarea {
   color: #ffffff;
   border: 1px solid #ffffff;
   padding: 7px 30px;
+  border-radius: 5px;
 
 }
 
 .btn:hover {
-  background-color:#621894;
+  background-color:#675899;
+  transition: .2s
 }
 
 .btn.btn-outline:hover{
   background-color: #fff;
+  color: #621894;
+  border-radius: 5px;
 
 }
 

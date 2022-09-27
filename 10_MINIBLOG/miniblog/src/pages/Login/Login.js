@@ -1,6 +1,4 @@
 import styles from './Login.module.css'
-import { db } from '../../firebase/config'
-
 
 import { useState, useEffect } from 'react'
 import { useAuthentication } from '../../hooks/useAuthenticattion'
@@ -26,6 +24,7 @@ export function Login() {
       password,
     }
 
+    // eslint-disable-next-line no-unused-vars
     const res = await login(user)
 
     console.log(user)

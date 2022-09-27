@@ -1,8 +1,8 @@
-import { db } from '../../firebase/config'
-
 import styles from './Register.module.css'
+
 import { useState, useEffect } from 'react'
 import { useAuthentication } from '../../hooks/useAuthenticattion'
+
 
 export function Register() {
   const [displayName, setDisplayName] = useState("")
@@ -28,6 +28,7 @@ export function Register() {
       setError("As senhas precisam ser iguais")
       return
     }
+    // eslint-disable-next-line no-unused-vars
     const res = await createUser(user)
 
     console.log(user)
